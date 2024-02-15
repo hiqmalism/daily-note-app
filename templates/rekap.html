@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REKAP KEGIATAN</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/sidebar.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    {% include 'sidebar.html' %}
+  <section class="home-section">
+    <nav class="navbar" style="background-color: #11111D; margin-bottom: 3%;">
+        <a class="navbar-brand" style="color: #FEFFFF; margin-left: 2%;">
+          <i class="fa-solid fa-folder"></i> Rekap Kegiatan
+        </a>
+    </nav>
+    <div class="card rounded-3 shadow" style="max-width: 18rem;margin-bottom: 3%;margin-left: 2%;">
+        <form>
+            <div class="card-body shadow-sm">
+              <div class="input-group" style="margin: auto;">
+                <a class="btn" style="background-color: #11111D;color: #FEFFFF;">Rekap</a>
+                <select name="kegiatan"class="form-control">
+                    <option value="tugas">Tugas</option>
+                    <option value="rutin">Rutin</option>
+                    <option value="rencana">Rencana</option>
+                </select>
+                <button type="submit" class="fa-solid fa-arrow-right btn btn-primary" style="color: #FEFFFF;"></button>
+              </div>
+            </div>
+        </form>
+    </div>
+
+    
+    <div class="card text-center rounded-3 shadow" style="max-width: 70rem;margin: auto;">
+        <div class="card-header" style="background-color: #1d1b31;">
+          <ul class="nav nav-tabs card-header-tabs" id="myTabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="harian" data-bs-toggle="tab" onclick="showharian()" href="#hari" role="tab" aria-controls="active" aria-selected="true">Harian</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="mingguan" data-bs-toggle="tab" onclick="showmingguan()" href="#minggu" role="tab" aria-controls="link" aria-selected="false">Mingguan</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="bulanan" data-bs-toggle="tab" onclick="showbulanan()" href="#bulan" role="tab" aria-controls="link" aria-selected="false">Bulanan</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active rutin-hari" id="hari" role="tabpanel" style="display: none" aria-labelledby="harian">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for baris in harian_rutin %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active rencana-hari" id="hari" role="tabpanel" style="display: none" aria-labelledby="harian">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for baris in harian_rencana %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active tugas-hari" id="hari" role="tabpanel" style="display: none" aria-labelledby="harian">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>             
+                        {% for baris in harian_tugas %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active rutin-minggu" id="minggu" role="tabpanel" style="display: none" aria-labelledby="mingguan">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for baris in mingguan_rutin %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active rencana-minggu" id="minggu"  role="tabpanel" style="display: none" aria-labelledby="mingguan">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for baris in mingguan_rencana %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active tugas-minggu" id="minggu" role="tabpanel" style="display: none" aria-labelledby="mingguan">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>             
+                        {% for baris in mingguan_tugas %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active rutin-bulan" id="bulan" role="tabpanel" style="display: none" aria-labelledby="bulanan">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for baris in bulanan_rutin %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active rencana-bulan" id="bulan" role="tabpanel" style="display: none" aria-labelledby="bulanan">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for baris in bulanan_rencana %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="tab-pane fade show active tugas-bulan" id="bulan" role="tabpanel" style="display: none" aria-labelledby="bulanan">
+                <table class="table table-hover" style="margin:auto;">
+                    <thead>
+                        <tr style="text-align: center;">
+                            <th scope="col">Tanggal & Waktu</th>
+                            <th scope="col">Aktivitas</th>
+                        </tr>
+                    </thead>
+                    <tbody>             
+                        {% for baris in bulanan_tugas %}
+                            <tr style="text-align: center;">
+                                <td>{{ baris[2] }}</td>
+                                <td>{{ baris[1] }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </section>
+  <script>
+    console.log('ggggg')
+    let queryString = window.location.search;
+    let urlParams = new URLSearchParams(queryString)
+    let kegiatan = urlParams.get('kegiatan')
+    if (kegiatan == 'rutin'){
+        function showharian(){
+        document.querySelector('.rutin-hari').style.display = 'block'
+        document.querySelector('.rutin-minggu').style.display = 'none'
+        document.querySelector('.rutin-bulan').style.display = 'none'
+        }
+        function showmingguan(){
+            document.querySelector('.rutin-hari').style.display = 'none'
+            document.querySelector('.rutin-minggu').style.display = 'block'
+            document.querySelector('.rutin-bulan').style.display = 'none'
+        }
+        function showbulanan(){
+            document.querySelector('.rutin-hari').style.display = 'none'
+            document.querySelector('.rutin-minggu').style.display = 'none'
+            document.querySelector('.rutin-bulan').style.display = 'block'
+        }
+    }
+    else if (kegiatan == 'rencana'){
+        function showharian(){
+        document.querySelector('.rencana-hari').style.display = 'block'
+        document.querySelector('.rencana-minggu').style.display = 'none'
+        document.querySelector('.rencana-bulan').style.display = 'none'
+        }
+        function showmingguan(){
+            document.querySelector('.rencana-hari').style.display = 'none'
+            document.querySelector('.rencana-minggu').style.display = 'block'
+            document.querySelector('.rencana-bulan').style.display = 'none'
+        }
+        function showbulanan(){
+            document.querySelector('.rencana-hari').style.display = 'none'
+            document.querySelector('.rencana-minggu').style.display = 'none'
+            document.querySelector('.rencana-bulan').style.display = 'block'
+        }
+    }
+
+    else if (kegiatan == 'tugas'){
+        function showharian(){
+        document.querySelector('.tugas-hari').style.display = 'block'
+        document.querySelector('.tugas-minggu').style.display = 'none'
+        document.querySelector('.tugas-bulan').style.display = 'none'
+        }
+        function showmingguan(){
+            document.querySelector('.tugas-hari').style.display = 'none'
+            document.querySelector('.tugas-minggu').style.display = 'block'
+            document.querySelector('.tugas-bulan').style.display = 'none'
+        }
+        function showbulanan(){
+            document.querySelector('.tugas-hari').style.display = 'none'
+            document.querySelector('.tugas-minggu').style.display = 'none'
+            document.querySelector('.tugas-bulan').style.display = 'block'
+        }
+    }
+    
+</script>
+  <script src="https://kit.fontawesome.com/5d845f5e34.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css" integrity="sha384-QYIZto+st3yW+o8+5OHfT6S482Zsvz2WfOzpFSXMF9zqeLcFV0/wlZpMtyFcZALm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="../static/sidebar.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  {% include 'sidebar.html' %}
+  <section class="home-section" >
+    <nav class="navbar" style="background-color: #11111D; margin-bottom: 3%;">
+      <a class="navbar-brand" style="color: #FEFFFF; margin-left: 2%;">
+        <i class="fa-solid fa-list-check"></i> Data Kegiatan Tugas
+      </a>
+    </nav>
+      <div class="card rounded-3 shadow" style="max-width: 50rem;margin: auto;">
+        <div class="card-body">
+          <form action="{{url_for('insert_tugas')}}" method="post">
+            <div class="card-body shadow-sm">
+              <div class="input-group" style="margin: auto;">
+                <input type="text" name="aktivitas" class="form-control">
+                <input type="datetime-local" name="datetime" class="form-control">
+                <select name="status" class="form-control" hidden>
+                  <option value=0>Pending</option>
+                </select>
+                <button type="submit" class="fa-solid fa-plus btn btn-primary" style="color: #FEFFFF;"></button>
+              </div>
+            </div>
+          </form>
+    
+        <br><br>
+          <table class="table table-hover" style="margin:auto;">
+            <thead>
+                <tr style="text-align: center;">
+                    <th scope="col">Aktivitas</th>
+                    <th scope="col">DateTime</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for baris in container %}
+                  <tr>
+                    <td>
+                      {% if baris[3]==0 %}
+                        <form action="{{url_for('tugas_process')}}" method="post">
+                          <input type="number" name="no" value="{{baris[0]}}" hidden>
+                          <input type="number" name="status" value="1" hidden>
+                          <button type="submit" class="fa-solid fa-check btn btn-sm btn-outline-success"></button>
+                          {{ baris[1] }}
+                        </form>
+                      {% elif baris[3]==1 %}
+                        <button type="button" class="fa-solid fa-check btn btn-sm btn-success"></button>
+                        {{ baris[1] }}
+                      {% endif %}
+                    </td>
+                    <td style="text-align: center;">{{ baris[2] }}</td>
+                    <td style="text-align: center;">
+                      {% if baris[3]==0 %}
+                        <i class="badge bg-warning">Pending</i>
+                      {% elif baris[3]==1 %}
+                        <i class="badge bg-success">Finished</i>
+                      {% endif %}
+                    </td>
+                    <td style="text-align: center;">
+                      <!-- <a href="#"><i class='fa-solid fa-pen-to-square'></i></a> -->
+                      <a href="{{url_for('delete_tugas', no=baris[0])}}"><i class='fa-solid fa-trash' style="color: red;"></i></a>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div>
+  </section>
+  <script src="https://kit.fontawesome.com/5d845f5e34.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+</body>
+</html>
